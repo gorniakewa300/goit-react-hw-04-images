@@ -1,33 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react';
 import propTypes from 'prop-types';
 import style from './ImageGalleryItem.module.css';
+import { nanoid } from 'nanoid';
 
-class ImageGalleryItem extends Component {
-  static defaultProps = { imageLink: ' ', imageAlt: ' ' };
+const ImageGalleryItem = ({
+  imageKey,
+  imageLink,
+  imageAlt,
+  largeImageURL,
+  modalFn,
+}) => {
+  return (
+    <li className={style.ImageGalleryItem} key={nanoid()}>
+      <img
+        onClick={e => {
+          modalFn(e.target.attributes[1].value);
+          console.log(e);
+        }}
+        key={imageKey}
+        src={imageLink}
+        alt={imageAlt}
+        data-large={largeImageURL}
+        className={style.ImageGalleryItem_image}
+      />
+    </li>
+  );
+};
 
-  static propTypes = {
-    imageLink: propTypes.string,
-    imageAlt: propTypes.string,
-    largeImageURL: propTypes.string,
-    modalFn: propTypes.func,
-  };
-
-  render() {
-    return (
-      <li className={style.ImageGalleryItem}>
-        <img
-          onClick={e => {
-            this.props.modalFn(e.target.attributes[2].value);
-            console.log(e);
-          }}
-          src={this.props.imageLink}
-          alt={this.props.imageAlt}
-          data-large={this.props.largeImageURL}
-          className={style.ImageGalleryItem_image}
-        />
-      </li>
-    );
-  }
-}
+ImageGalleryItem.propTypes = {
+  imageKey: propTypes.number.isRequired,
+  imageLink: propTypes.string.isRequired,
+  imageAlt: propTypes.string,
+  largeImageURL: propTypes.string.isRequired,
+  modalFn: propTypes.func.isRequired,
+};
 
 export default ImageGalleryItem;

@@ -1,25 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import propTypes from 'prop-types';
 import style from './Button.module.css';
 
-class Button extends Component {
-  static propTypes = { fn: propTypes.func };
+const Button = ({ fn }) => {
+  window.scrollTo({
+    top: document.documentElement.scrollHeight,
+    behavior: 'smooth',
+  });
+  return (
+    <button className={style.Button} type="button" onClick={() => fn()}>
+      Load more
+    </button>
+  );
+};
 
-  render() {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth',
-    });
-    return (
-      <button
-        className={style.Button}
-        type="button"
-        onClick={e => this.props.fn()}
-      >
-        Load more
-      </button>
-    );
-  }
-}
+Button.propTypes = {
+  fn: propTypes.func.isRequired,
+};
 
 export default Button;
